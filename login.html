@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>जोडी नेपाल - लगइन</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #7E57C2;
+            --primary-dark: #5E35B1;
+            --primary-light: #D1C4E9;
+            --secondary: #FF4081;
+            --secondary-dark: #E91E63;
+            --accent: #00BCD4;
+            --surface: #FFFFFF;
+            --background: #F5F7FA;
+            --on-surface: #212121;
+            --on-primary: #FFFFFF;
+            --muted: #757575;
+            --divider: #E0E0E0;
+            --error: #F44336;
+            --success: #4CAF50;
+            --warning: #FF9800;
+            --border-radius: 12px;
+            --border-radius-lg: 20px;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--on-surface);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 16px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 450px;
+            background: var(--surface);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-dark), var(--secondary-dark));
+            color: var(--on-primary);
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+            animation: shimmer 3s infinite linear;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-weight: 700;
+            font-size: 28px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .form-container {
+            padding: 30px;
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid var(--divider);
+            border-radius: var(--border-radius);
+            background: var(--background);
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(126, 87, 194, 0.2);
+            background: var(--surface);
+        }
+
+        .form-group.invalid input {
+            border-color: var(--error);
+        }
+
+        .form-group label {
+            position: absolute;
+            left: 16px;
+            top: 16px;
+            background: var(--surface);
+            padding: 0 8px;
+            color: var(--muted);
+            pointer-events: none;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+
+        .form-group input:focus + label,
+        .form-group input:not(:placeholder-shown) + label {
+            top: -10px;
+            font-size: 13px;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .form-group.invalid label {
+            color: var(--error);
+        }
+
+        .field-error {
+            color: var(--error);
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .form-group.invalid .field-error {
+            display: block;
+        }
+
+        .message {
+            padding: 15px;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+            font-weight: 600;
+            text-align: center;
+            display: none;
+        }
+
+        .message-success {
+            background: rgba(76, 175, 80, 0.1);
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+
+        .message-error {
+            background: rgba(244, 67, 54, 0.1);
+            color: var(--error);
+            border: 1px solid var(--error);
+        }
+
+        .message-warning {
+            background: rgba(255, 152, 0, 0.1);
+            color: var(--warning);
+            border: 1px solid var(--warning);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            border-radius: var(--border-radius);
+            border: none;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: var(--on-primary);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(126, 87, 194, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .footer-links {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--divider);
+        }
+
+        .footer-links a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+            text-decoration: underline;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            font-weight: 600;
+            z-index: 1000;
+            display: none;
+        }
+
+        .verification-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            background: var(--background);
+            font-weight: 600;
+        }
+
+        .verified {
+            color: var(--success);
+            border-left: 4px solid var(--success);
+        }
+
+        .not-verified {
+            color: var(--warning);
+            border-left: 4px solid var(--warning);
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                max-width: 100%;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .logo {
+                width: 60px;
+                height: 60px;
+                font-size: 22px;
+            }
+            
+            .header h1 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <img src="app_icon.png" alt="जोडी नेपाल">
+            </div>
+            <h1>जोडी नेपाल लगइन</h1>
+            <p>सुरक्षित र भरपर्दो जीवनसाथी खोजी</p>
+        </div>
+
+        <div class="form-container">
+            <div id="message" class="message"></div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <input type="email" id="email" name="email" placeholder=" " required>
+                    <label for="email">इमेल ठेगाना</label>
+                    <div class="field-error">कृपया वैध इमेल ठेगाना भर्नुहोस्</div>
+                </div>
+
+                <div class="form-group">
+                    <input type="password" id="password" name="password" placeholder=" " required>
+                    <label for="password">पासवर्ड</label>
+                    <div class="field-error">कृपया पासवर्ड भर्नुहोस्</div>
+                </div>
+
+                <div id="verificationStatus" class="verification-status" style="display: none;">
+                    <span class="material-icons" id="verificationIcon">info</span>
+                    <span id="verificationText">प्रोफाइल प्रमाणित भइरहेको...</span>
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="loginBtn">
+                    <span class="material-icons">login</span>
+                    लगइन गर्नुहोस्
+                </button>
+            </form>
+
+            <div class="footer-links">
+                <p>खाता छैन? <a href="registration.html">यहाँ दर्ता गर्नुहोस्</a></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+            const loginBtn = document.getElementById('loginBtn');
+            const messageDiv = document.getElementById('message');
+            const toast = document.getElementById('toast');
+            const verificationStatus = document.getElementById('verificationStatus');
+            const verificationIcon = document.getElementById('verificationIcon');
+            const verificationText = document.getElementById('verificationText');
+            
+            // Check if there's a success message from registration
+            const registrationSuccess = localStorage.getItem('registration_success');
+            if (registrationSuccess) {
+                showMessage(registrationSuccess, 'success');
+                localStorage.removeItem('registration_success');
+                
+                // Pre-fill email and password if available
+                const savedEmail = localStorage.getItem('login_email');
+                const savedPassword = localStorage.getItem('login_password');
+                
+                if (savedEmail && savedPassword) {
+                    document.getElementById('email').value = savedEmail;
+                    document.getElementById('password').value = savedPassword;
+                    
+                    // Remove saved credentials after pre-filling
+                    localStorage.removeItem('login_email');
+                    localStorage.removeItem('login_password');
+                }
+            }
+            
+            // Login form submission
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (validateForm()) {
+                    const email = document.getElementById('email').value;
+                    const password = document.getElementById('password').value;
+                    
+                    // Show loading state
+                    loginBtn.disabled = true;
+                    loginBtn.innerHTML = '<span class="material-icons">hourglass_empty</span> प्रोसेसिङ्ग...';
+                    
+                    // Simulate API call delay
+                    setTimeout(function() {
+                        const user = authenticateUser(email, password);
+                        
+                        if (user) {
+                            if (user.verified) {
+                                // User is verified, allow login
+                                showToast('✅ लगइन सफल भयो!');
+                                
+                                // Store login session
+                                localStorage.setItem('currentUser', JSON.stringify(user));
+                                
+                                // Redirect to index.html after 1 second
+                                setTimeout(function() {
+                                    window.location.href = 'index.html';
+                                }, 1000);
+                            } else {
+                                // User is not verified
+                                showVerificationStatus(false);
+                                showMessage('❌ तपाईँको प्रोफाइल प्रमाणित भएको छैन। कृपया जोडीनेपाल टिमले प्रमाणित गरेपछि लगइन गर्न सक्नुहुन्छ।', 'warning');
+                            }
+                        } else {
+                            // Invalid credentials
+                            showMessage('❌ इमेल वा पासवर्ड गलत छ। कृपया पुनः प्रयास गर्नुहोस्।', 'error');
+                        }
+                        
+                        // Reset button state
+                        loginBtn.disabled = false;
+                        loginBtn.innerHTML = '<span class="material-icons">login</span> लगइन गर्नुहोस्';
+                    }, 1500);
+                }
+            });
+            
+            // Validate form
+            function validateForm() {
+                const email = document.getElementById('email');
+                const password = document.getElementById('password');
+                let isValid = true;
+                
+                // Clear previous errors
+                document.querySelectorAll('.form-group').forEach(group => {
+                    group.classList.remove('invalid');
+                });
+                hideMessage();
+                hideVerificationStatus();
+                
+                // Email validation
+                if (!email.value || !isValidEmail(email.value)) {
+                    email.closest('.form-group').classList.add('invalid');
+                    isValid = false;
+                }
+                
+                // Password validation
+                if (!password.value) {
+                    password.closest('.form-group').classList.add('invalid');
+                    isValid = false;
+                }
+                
+                return isValid;
+            }
+            
+            // Email validation
+            function isValidEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
+            }
+            
+            // Authenticate user
+            function authenticateUser(email, password) {
+                // Get nextUserId to know how many users we have
+                const nextUserId = parseInt(localStorage.getItem('nextUserId')) || 1;
+                
+                // Search for user with matching email and password
+                for (let i = 1; i < nextUserId; i++) {
+                    const userData = localStorage.getItem(`user_${i}`);
+                    if (userData) {
+                        const user = JSON.parse(userData);
+                        if (user.email === email && user.password === password) {
+                            return user;
+                        }
+                    }
+                }
+                
+                return null;
+            }
+            
+            // Show verification status
+            function showVerificationStatus(isVerified) {
+                if (isVerified) {
+                    verificationStatus.className = 'verification-status verified';
+                    verificationIcon.textContent = 'check_circle';
+                    verificationText.textContent = 'तपाईँको प्रोफाइल प्रमाणित भएको छ।';
+                } else {
+                    verificationStatus.className = 'verification-status not-verified';
+                    verificationIcon.textContent = 'warning';
+                    verificationText.textContent = 'तपाईँको प्रोफाइल प्रमाणित भएको छैन।';
+                }
+                verificationStatus.style.display = 'flex';
+            }
+            
+            // Hide verification status
+            function hideVerificationStatus() {
+                verificationStatus.style.display = 'none';
+            }
+            
+            // Show message
+            function showMessage(text, type) {
+                messageDiv.textContent = text;
+                messageDiv.className = `message message-${type}`;
+                messageDiv.style.display = 'block';
+            }
+            
+            // Hide message
+            function hideMessage() {
+                messageDiv.style.display = 'none';
+            }
+            
+            // Show toast
+            function showToast(text) {
+                toast.textContent = text;
+                toast.style.display = 'block';
+                
+                setTimeout(function() {
+                    toast.style.display = 'none';
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>

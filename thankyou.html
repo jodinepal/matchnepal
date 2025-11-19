@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>धन्यवाद - जोडी नेपाल</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #7E57C2;
+            --primary-dark: #5E35B1;
+            --secondary: #FF4081;
+            --accent: #00BCD4;
+            --surface: #FFFFFF;
+            --background: #F5F7FA;
+            --on-surface: #212121;
+            --on-primary: #FFFFFF;
+            --success: #4CAF50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--on-surface);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .thankyou-container {
+            background: var(--surface);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .success-icon {
+            font-size: 80px;
+            color: var(--success);
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 28px;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .user-id-display {
+            background: linear-gradient(135deg, var(--primary-light), var(--accent));
+            padding: 20px;
+            border-radius: 12px;
+            margin: 25px 0;
+            border: 2px dashed var(--primary);
+        }
+
+        .user-id {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .instructions {
+            background: var(--background);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .instructions h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .instructions ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .instructions li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .instructions li:last-child {
+            border-bottom: none;
+        }
+
+        .btn {
+            padding: 14px 24px;
+            border-radius: 12px;
+            border: none;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            margin: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: var(--on-primary);
+            box-shadow: 0 4px 12px rgba(126, 87, 194, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(126, 87, 194, 0.4);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-ghost:hover {
+            background: rgba(126, 87, 194, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="thankyou-container">
+        <div class="success-icon material-icons">check_circle</div>
+        <h1>धन्यवाद! तपाईंको दर्ता सफल भयो</h1>
+        <p>तपाईंको प्रोफाइल हाम्रो टिमले जाँच गर्नेछ र शीघ्र नै तपाईंलाई सम्पर्क गरिनेछ।</p>
+        
+        <div class="user-id-display">
+            <div class="material-icons" style="font-size: 40px; color: var(--primary);">badge</div>
+            <h3>तपाईंको युजर आईडी</h3>
+            <div class="user-id" id="displayUserId">-</div>
+            <p>कृपया यो आईडी नोट गर्नुहोस् र लगइन गर्दा प्रयोग गर्नुहोस्</p>
+        </div>
+
+        <div class="instructions">
+            <h3>अर्को चरणहरू:</h3>
+            <ul>
+                <li>✅ तपाईंको प्रोफाइल जाँचिँदैछ</li>
+                <li>📞 २४-४८ घण्टाभित्र सम्पर्क हुनेछ</li>
+                <li>🔐 युजर आईडी राख्नुहोस् सुरक्षित ठाउँमा</li>
+                <li>👥 मिल्ने जोडीहरूको सुझाव पाउनुहुनेछ</li>
+            </ul>
+        </div>
+
+        <div>
+            <a href="login.html" class="btn btn-primary">
+                <span class="material-icons">login</span>
+                लगइन गर्नुहोस्
+            </a>
+            <a href="index.html" class="btn btn-ghost">
+                <span class="material-icons">home</span>
+                गृहपृष्ठ
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Get user ID from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get('userId');
+        
+        if (userId) {
+            document.getElementById('displayUserId').textContent = userId;
+            
+            // Store in localStorage for future reference
+            localStorage.setItem('last_user_id', userId);
+        } else {
+            // If no user ID in URL, redirect to registration
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

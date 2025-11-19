@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>एडमिन प्यानल - जोडी नेपाल</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage-compat.js"></script>
+    
+    <style>
+        :root {
+            --primary: #7E57C2;
+            --primary-dark: #5E35B1;
+            --primary-light: #D1C4E9;
+            --secondary: #FF4081;
+            --secondary-dark: #E91E63;
+            --accent: #00BCD4;
+            --success: #4CAF50;
+            --warning: #FF9800;
+            --error: #F44336;
+            --surface: #FFFFFF;
+            --background: #F5F7FA;
+            --on-surface: #212121;
+            --on-primary: #FFFFFF;
+            --muted: #757575;
+            --divider: #E0E0E0;
+            --border-radius: 12px;
+            --border-radius-lg: 20px;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--background);
+            color: var(--on-surface);
+            min-height: 100vh;
+        }
+
+        .admin-header {
+            background: linear-gradient(135deg, var(--primary-dark), var(--secondary-dark));
+            color: var(--on-primary);
+            padding: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .admin-title h1 {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .admin-title p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .stats-section {
+            display: flex;
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px 20px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .tabs-container {
+            background: var(--surface);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .tabs-header {
+            display: flex;
+            background: var(--primary-light);
+        }
+
+        .tab {
+            padding: 15px 30px;
+            cursor: pointer;
+            font-weight: 600;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab.active {
+            background: var(--surface);
+            border-bottom: 3px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .tab-badge {
+            background: var(--primary);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .search-section {
+            margin-bottom: 20px;
+        }
+
+        .search-box {
+            position: relative;
+            max-width: 400px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 45px 12px 15px;
+            border: 2px solid var(--divider);
+            border-radius: var(--border-radius);
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(126, 87, 194, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted);
+        }
+
+        .users-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .user-card {
+            background: var(--surface);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .user-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .user-card-header {
+            display: flex;
+            padding: 20px;
+            gap: 15px;
+            border-bottom: 1px solid var(--divider);
+        }
+
+        .user-photo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid var(--primary-light);
+        }
+
+        .user-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .user-info {
+            flex: 1;
+        }
+
+        .user-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--primary-dark);
+        }
+
+        .user-phone {
+            color: var(--muted);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .user-id {
+            font-size: 12px;
+            color: var(--muted);
+            background: var(--background);
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .user-card-body {
+            padding: 15px 20px;
+        }
+
+        .user-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid var(--divider);
+        }
+
+        .detail-label {
+            color: var(--muted);
+        }
+
+        .detail-value {
+            font-weight: 500;
+        }
+
+        .user-card-footer {
+            padding: 15px 20px;
+            background: var(--background);
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: var(--border-radius);
+            border: none;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #45a049;
+        }
+
+        .btn-danger {
+            background: var(--error);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #d32f2f;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--surface);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-lg);
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--on-primary);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--on-primary);
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .user-profile-section {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--divider);
+        }
+
+        .profile-photo-large {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid var(--primary-light);
+        }
+
+        .profile-photo-large img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-name {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary-dark);
+        }
+
+        .profile-contact {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--muted);
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .detail-section {
+            background: var(--background);
+            padding: 15px;
+            border-radius: var(--border-radius);
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .photos-section {
+            margin-bottom: 20px;
+        }
+
+        .photos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .photo-item {
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .photo-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 8px;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .modal-footer {
+            padding: 20px;
+            background: var(--background);
+            border-top: 1px solid var(--divider);
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+        }
+
+        .btn-lg {
+            padding: 12px 24px;
+            font-size: 16px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--muted);
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--divider);
+            border-left: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: var(--muted);
+        }
+
+        .empty-state .material-icons {
+            font-size: 60px;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .stats-section {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .users-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .user-profile-section {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .profile-contact {
+                grid-template-columns: 1fr;
+            }
+
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-footer {
+                flex-direction: column;
+            }
+
+            .tabs-header {
+                flex-direction: column;
+            }
+
+            .tab {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="admin-header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo">
+                    <img src="app_icon.png" alt="जोडी नेपाल">
+                </div>
+                <div class="admin-title">
+                    <h1>एडमिन प्यानल</h1>
+                    <p>जोडी नेपाल - युजर व्यवस्थापन</p>
+                </div>
+            </div>
+            <div class="stats-section">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalUsers">0</div>
+                    <div class="stat-label">कुल युजर</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="pendingUsers">0</div>
+                    <div class="stat-label">पेन्डिङ</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="verifiedUsers">0</div>
+                    <div class="stat-label">भेरिफाइड</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="admin-container">
+        <div class="tabs-container">
+            <div class="tabs-header">
+                <div class="tab active" data-tab="pending">
+                    <span class="material-icons">schedule</span>
+                    पेन्डिङ रिक्वेस्ट
+                    <span class="tab-badge" id="pendingBadge">0</span>
+                </div>
+                <div class="tab" data-tab="verified">
+                    <span class="material-icons">verified</span>
+                    भेरिफाइड युजर
+                    <span class="tab-badge" id="verifiedBadge">0</span>
+                </div>
+            </div>
+
+            <!-- Pending Requests Tab -->
+            <div class="tab-content active" id="pendingTab">
+                <div class="search-section">
+                    <div class="search-box">
+                        <input type="text" id="searchPending" placeholder="युजर खोज्नुहोस्...">
+                        <span class="material-icons search-icon">search</span>
+                    </div>
+                </div>
+                <div class="users-grid" id="pendingUsersGrid">
+                    <div class="loading">
+                        <div class="loading-spinner"></div>
+                        <p>युजरहरू लोड हुँदैछ...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Verified Users Tab -->
+            <div class="tab-content" id="verifiedTab">
+                <div class="search-section">
+                    <div class="search-box">
+                        <input type="text" id="searchVerified" placeholder="युजर खोज्नुहोस्...">
+                        <span class="material-icons search-icon">search</span>
+                    </div>
+                </div>
+                <div class="users-grid" id="verifiedUsersGrid">
+                    <div class="loading">
+                        <div class="loading-spinner"></div>
+                        <p>युजरहरू लोड हुँदैछ...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Detail Modal -->
+    <div class="modal" id="userModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">युजर विवरण</div>
+                <button class="modal-close" id="modalClose">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Modal content will be loaded here -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success btn-lg" id="verifyBtn">
+                    <span class="material-icons">verified</span>
+                    भेरिफाइ गर्नुहोस्
+                </button>
+                <button class="btn btn-danger btn-lg" id="deleteBtn">
+                    <span class="material-icons">delete</span>
+                    डिलिट गर्नुहोस्
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCbXj9S4cadKLEcLbVQs5dHd1MA9jwZl0Q",
+            authDomain: "jodinepal.firebaseapp.com",
+            databaseURL: "https://jodinepal-default-rtdb.firebaseio.com",
+            projectId: "jodinepal",
+            storageBucket: "jodinepal.firebasestorage.app",
+            messagingSenderId: "468612036944",
+            appId: "1:468612036944:web:a2971baba77a5c1b089455",
+            measurementId: "G-MH234NB5WF"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const storage = firebase.storage();
+
+        let allUsers = [];
+        let currentSelectedUser = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tab functionality
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // Update active tab
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Update active content
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    document.getElementById(`${tabId}Tab`).classList.add('active');
+                    
+                    // Load data for the active tab
+                    if (tabId === 'pending') {
+                        loadPendingUsers();
+                    } else if (tabId === 'verified') {
+                        loadVerifiedUsers();
+                    }
+                });
+            });
+
+            // Modal functionality
+            const modal = document.getElementById('userModal');
+            const modalClose = document.getElementById('modalClose');
+            
+            modalClose.addEventListener('click', function() {
+                modal.classList.remove('active');
+            });
+            
+            // Close modal when clicking outside
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
+
+            // Verify and Delete buttons
+            document.getElementById('verifyBtn').addEventListener('click', verifyUser);
+            document.getElementById('deleteBtn').addEventListener('click', deleteUser);
+
+            // Search functionality
+            document.getElementById('searchPending').addEventListener('input', filterPendingUsers);
+            document.getElementById('searchVerified').addEventListener('input', filterVerifiedUsers);
+
+            // Load initial data
+            loadAllUsers();
+        });
+
+        // Load all users from Firebase
+        async function loadAllUsers() {
+            try {
+                const snapshot = await database.ref('registration').once('value');
+                allUsers = [];
+                
+                if (snapshot.exists()) {
+                    snapshot.forEach(childSnapshot => {
+                        const user = childSnapshot.val();
+                        user.id = childSnapshot.key;
+                        allUsers.push(user);
+                    });
+                    
+                    updateStats();
+                    loadPendingUsers();
+                    loadVerifiedUsers();
+                } else {
+                    showEmptyState('pendingUsersGrid', 'कुनै पेन्डिङ युजर छैनन्');
+                    showEmptyState('verifiedUsersGrid', 'कुनै भेरिफाइड युजर छैनन्');
+                }
+            } catch (error) {
+                console.error('Error loading users:', error);
+                showError('युजरहरू लोड गर्न असफल');
+            }
+        }
+
+        // Update statistics
+        function updateStats() {
+            const totalUsers = allUsers.length;
+            const pendingUsers = allUsers.filter(user => !user.account?.verified).length;
+            const verifiedUsers = allUsers.filter(user => user.account?.verified).length;
+            
+            document.getElementById('totalUsers').textContent = totalUsers;
+            document.getElementById('pendingUsers').textContent = pendingUsers;
+            document.getElementById('verifiedUsers').textContent = verifiedUsers;
+            document.getElementById('pendingBadge').textContent = pendingUsers;
+            document.getElementById('verifiedBadge').textContent = verifiedUsers;
+        }
+
+        // Load pending users
+        function loadPendingUsers() {
+            const pendingUsers = allUsers.filter(user => !user.account?.verified);
+            displayUsers(pendingUsers, 'pendingUsersGrid');
+        }
+
+        // Load verified users
+        function loadVerifiedUsers() {
+            const verifiedUsers = allUsers.filter(user => user.account?.verified);
+            displayUsers(verifiedUsers, 'verifiedUsersGrid');
+        }
+
+        // Display users in grid
+        function displayUsers(users, containerId) {
+            const container = document.getElementById(containerId);
+            
+            if (users.length === 0) {
+                showEmptyState(containerId, 'कुनै युजर छैनन्');
+                return;
+            }
+            
+            container.innerHTML = '';
+            
+            users.forEach(user => {
+                const userCard = createUserCard(user);
+                container.appendChild(userCard);
+            });
+        }
+
+        // Create user card element
+        function createUserCard(user) {
+            const card = document.createElement('div');
+            card.className = 'user-card';
+            card.setAttribute('data-user-id', user.id);
+            
+            const personalInfo = user.personalInfo || {};
+            const accountInfo = user.account || {};
+            
+            card.innerHTML = `
+                <div class="user-card-header">
+                    <div class="user-photo">
+                        <img src="${user.files?.photo || 'default-avatar.png'}" alt="प्रोफाइल फोटो" onerror="this.src='default-avatar.png'">
+                    </div>
+                    <div class="user-info">
+                        <div class="user-name">${personalInfo.firstName || ''} ${personalInfo.lastName || ''}</div>
+                        <div class="user-phone">
+                            <span class="material-icons">phone</span>
+                            ${personalInfo.phone || 'N/A'}
+                        </div>
+                        <div class="user-id">${accountInfo.userId || user.id}</div>
+                    </div>
+                </div>
+                <div class="user-card-body">
+                    <div class="user-details">
+                        <div class="detail-item">
+                            <span class="detail-label">उमेर:</span>
+                            <span class="detail-value">${personalInfo.age || 'N/A'}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">लिङ्ग:</span>
+                            <span class="detail-value">${personalInfo.gender || 'N/A'}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">देश:</span>
+                            <span class="detail-value">${personalInfo.country || 'N/A'}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">स्थिति:</span>
+                            <span class="detail-value">${accountInfo.verified ? 'भेरिफाइड' : 'पेन्डिङ'}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="user-card-footer">
+                    <button class="btn btn-success view-details">
+                        <span class="material-icons">visibility</span>
+                        विवरण हेर्नुहोस्
+                    </button>
+                </div>
+            `;
+            
+            // Add click event to view details button
+            card.querySelector('.view-details').addEventListener('click', function(e) {
+                e.stopPropagation();
+                showUserDetails(user);
+            });
+            
+            // Add click event to entire card
+            card.addEventListener('click', function() {
+                showUserDetails(user);
+            });
+            
+            return card;
+        }
+
+        // Show user details in modal
+        function showUserDetails(user) {
+            currentSelectedUser = user;
+            const modalBody = document.getElementById('modalBody');
+            const personalInfo = user.personalInfo || {};
+            const partnerPrefs = user.partnerPreferences || {};
+            const accountInfo = user.account || {};
+            const files = user.files || {};
+            
+            // Show/hide verify button based on verification status
+            const verifyBtn = document.getElementById('verifyBtn');
+            verifyBtn.style.display = accountInfo.verified ? 'none' : 'flex';
+            
+            modalBody.innerHTML = `
+                <div class="user-profile-section">
+                    <div class="profile-photo-large">
+                        <img src="${files.photo || 'default-avatar.png'}" alt="प्रोफाइल फोटो" onerror="this.src='default-avatar.png'">
+                    </div>
+                    <div class="profile-info">
+                        <div class="profile-name">${personalInfo.firstName || ''} ${personalInfo.lastName || ''}</div>
+                        <div class="profile-contact">
+                            <div class="contact-item">
+                                <span class="material-icons">phone</span>
+                                ${personalInfo.phone || 'N/A'}
+                            </div>
+                            <div class="contact-item">
+                                <span class="material-icons">email</span>
+                                ${personalInfo.email || 'N/A'}
+                            </div>
+                            <div class="contact-item">
+                                <span class="material-icons">badge</span>
+                                ${accountInfo.userId || user.id}
+                            </div>
+                            <div class="contact-item">
+                                <span class="material-icons">calendar_today</span>
+                                ${new Date(accountInfo.registrationDate).toLocaleDateString('ne-NP')}
+                            </div>
+                        </div>
+                        <div class="user-id">युजर आईडी: ${accountInfo.userId || user.id}</div>
+                    </div>
+                </div>
+
+                <div class="details-grid">
+                    <div class="detail-section">
+                        <div class="section-title">
+                            <span class="material-icons">person</span>
+                            व्यक्तिगत विवरण
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">उमेर:</span>
+                            <span class="detail-value">${personalInfo.age || 'N/A'}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">लिङ्ग:</span>
+                            <span class="detail-value">${personalInfo.gender || 'N/A'}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">वैवाहिक स्थिति:</span>
+                            <span class="detail-value">${personalInfo.maritalStatus || 'N/A'}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">जात/जाति:</span>
+                            <span class="detail-value">${personalInfo.caste || 'N/A'}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">सन्तान:</span>
+                            <span class="detail-value">${personalInfo.children || 'N/A'}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">शिक्षा:</span>
+                            <span class="detail-value">${personalInfo.education || 'N/A'}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">पेशा:</span>
+                            <span class="detail-value">${personalInfo.occupation || 'N/A'}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">देश:</span>
+                            <span class="detail-value">${personalInfo.country || 'N/A'}</span>
+                        </div>
+                    </div>
+
+                    <div class="detail-section">
+                        <div class="section-title">
+                            <span class="material-icons">favorite</span>
+                            जोडी खोजी विवरण
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">रोजाइको लिङ्ग:</span>
+                            <span class="detail-value">${partnerPrefs.preferredGender || 'N/A'}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">उमेर सीमा:</span>
+                            <span class="detail-value">${partnerPrefs.preferredAge || 'N/A'}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">रोजाइको जात:</span>
+                            <span class="detail-value">${partnerPrefs.preferredCaste || 'N/A'}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">रोजाइको देश:</span>
+                            <span class="detail-value">${partnerPrefs.preferredCountry || 'N/A'}</span>
+                        </div>
+                        <div class="detail-item full-width">
+                            <span class="detail-label">आदर्श जोडी विवरण:</span>
+                            <span class="detail-value">${partnerPrefs.partnerDescription || 'N/A'}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="photos-section">
+                    <div class="section-title">
+                        <span class="material-icons">photo_library</span>
+                        फोटोहरू र कागजातहरू
+                    </div>
+                    <div class="photos-grid">
+                        <div class="photo-item">
+                            <img src="${files.photo || 'default-avatar.png'}" alt="प्रोफाइल फोटो" onerror="this.src='default-avatar.png'">
+                            <div class="photo-label">प्रोफाइल फोटो</div>
+                        </div>
+                        <div class="photo-item">
+                            <img src="${files.citizenship || 'default-doc.png'}" alt="नागरिकता" onerror="this.src='default-doc.png'">
+                            <div class="photo-label">नागरिकता</div>
+                        </div>
+                        <div class="photo-item">
+                            <img src="${files.payment || 'default-doc.png'}" alt="भुक्तानी" onerror="this.src='default-doc.png'">
+                            <div class="photo-label">भुक्तानी Screenshot</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('userModal').classList.add('active');
+        }
+
+        // Verify user
+        async function verifyUser() {
+            if (!currentSelectedUser) return;
+            
+            try {
+                const userRef = database.ref('registration').child(currentSelectedUser.id);
+                await userRef.update({
+                    'account/verified': true,
+                    'account/verifiedAt': new Date().toISOString()
+                });
+                
+                showSuccess('युजर सफलतापूर्वक भेरिफाइ भयो');
+                document.getElementById('userModal').classList.remove('active');
+                loadAllUsers(); // Reload data
+            } catch (error) {
+                console.error('Error verifying user:', error);
+                showError('युजर भेरिफाइ गर्न असफल');
+            }
+        }
+
+        // Delete user
+        async function deleteUser() {
+            if (!currentSelectedUser || !confirm('के तपाईं यो युजरलाई डिलिट गर्न निश्चित हुनुहुन्छ? यो कार्य पूर्ववत गर्न सकिँदैन।')) {
+                return;
+            }
+            
+            try {
+                const userId = currentSelectedUser.id;
+                
+                // Delete from Realtime Database
+                await database.ref('registration').child(userId).remove();
+                
+                // Delete files from Storage
+                await deleteUserFiles(userId);
+                
+                showSuccess('युजर सफलतापूर्वक डिलिट भयो');
+                document.getElementById('userModal').classList.remove('active');
+                loadAllUsers(); // Reload data
+            } catch (error) {
+                console.error('Error deleting user:', error);
+                showError('युजर डिलिट गर्न असफल');
+            }
+        }
+
+        // Delete user files from Storage
+        async function deleteUserFiles(userId) {
+            try {
+                const storageRef = storage.ref();
+                const userFilesRef = storageRef.child(`registrations/${userId}`);
+                const filesList = await userFilesRef.listAll();
+                
+                // Delete all files in the user's folder
+                const deletePromises = filesList.items.map(item => item.delete());
+                await Promise.all(deletePromises);
+                
+                // Delete the folder itself
+                await userFilesRef.delete();
+            } catch (error) {
+                console.error('Error deleting user files:', error);
+                // Continue even if file deletion fails
+            }
+        }
+
+        // Filter users based on search
+        function filterPendingUsers() {
+            const searchTerm = document.getElementById('searchPending').value.toLowerCase();
+            const pendingUsers = allUsers.filter(user => 
+                !user.account?.verified && 
+                matchesSearch(user, searchTerm)
+            );
+            displayUsers(pendingUsers, 'pendingUsersGrid');
+        }
+
+        function filterVerifiedUsers() {
+            const searchTerm = document.getElementById('searchVerified').value.toLowerCase();
+            const verifiedUsers = allUsers.filter(user => 
+                user.account?.verified && 
+                matchesSearch(user, searchTerm)
+            );
+            displayUsers(verifiedUsers, 'verifiedUsersGrid');
+        }
+
+        function matchesSearch(user, searchTerm) {
+            if (!searchTerm) return true;
+            
+            const personalInfo = user.personalInfo || {};
+            const accountInfo = user.account || {};
+            
+            const searchableText = [
+                personalInfo.firstName,
+                personalInfo.lastName,
+                personalInfo.phone,
+                personalInfo.email,
+                accountInfo.userId,
+                personalInfo.country
+            ].filter(Boolean).join(' ').toLowerCase();
+            
+            return searchableText.includes(searchTerm);
+        }
+
+        // Utility functions
+        function showEmptyState(containerId, message) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = `
+                <div class="empty-state">
+                    <span class="material-icons">inbox</span>
+                    <p>${message}</p>
+                </div>
+            `;
+        }
+
+        function showSuccess(message) {
+            alert(`✅ ${message}`);
+        }
+
+        function showError(message) {
+            alert(`❌ ${message}`);
+        }
+    </script>
+</body>
+</html>
