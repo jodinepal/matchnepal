@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jodinepal | सेवा सर्त तथा नियमहरू</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+<style>
+    :root {
+        --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        --gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        --gradient-5: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        
+        --primary: #6C63FF;
+        --primary-dark: #564FD8;
+        --primary-light: #8B85FF;
+        --secondary: #FF6584;
+        --accent: #36D1DC;
+        --success: #4CAF50;
+        --warning: #FF9800;
+        --error: #F44336;
+        
+        --bg-dark: #0F0F1B;
+        --bg-card: #1A1A2E;
+        --bg-surface: #242442;
+        --text-primary: #FFFFFF;
+        --text-secondary: #B8B8D0;
+        --text-muted: #8A8AA8;
+        
+        --shadow-1: 0 4px 6px rgba(0, 0, 0, 0.1);
+        --shadow-2: 0 10px 20px rgba(0, 0, 0, 0.2);
+        --shadow-3: 0 20px 40px rgba(0, 0, 0, 0.3);
+        --shadow-glow: 0 0 20px rgba(108, 99, 255, 0.3);
+        
+        --border-radius: 20px;
+        --border-radius-lg: 30px;
+        --border-radius-xl: 40px;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: var(--bg-dark);
+        color: var(--text-primary);
+        line-height: 1.7;
+        overflow-x: hidden;
+        background-image: 
+            radial-gradient(circle at 10% 20%, rgba(108, 99, 255, 0.1) 0%, transparent 20%),
+            radial-gradient(circle at 90% 80%, rgba(255, 101, 132, 0.1) 0%, transparent 20%);
+    }
+
+    /* Floating Background Elements */
+    .floating-elements {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+    }
+
+    .floating-element {
+        position: absolute;
+        border-radius: 50%;
+        background: var(--gradient-1);
+        opacity: 0.1;
+        animation: float 20s infinite linear;
+    }
+
+    .floating-element:nth-child(1) {
+        width: 300px;
+        height: 300px;
+        top: 10%;
+        left: 5%;
+        animation-delay: 0s;
+        background: var(--gradient-1);
+    }
+
+    .floating-element:nth-child(2) {
+        width: 200px;
+        height: 200px;
+        top: 60%;
+        right: 10%;
+        animation-delay: -5s;
+        background: var(--gradient-2);
+    }
+
+    .floating-element:nth-child(3) {
+        width: 150px;
+        height: 150px;
+        bottom: 20%;
+        left: 20%;
+        animation-delay: -10s;
+        background: var(--gradient-3);
+    }
+
+    @keyframes float {
+        0%, 100% {
+            transform: translateY(0) rotate(0deg);
+        }
+        25% {
+            transform: translateY(-20px) rotate(90deg);
+        }
+        50% {
+            transform: translateY(0) rotate(180deg);
+        }
+        75% {
+            transform: translateY(20px) rotate(270deg);
+        }
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    /* Header Styles */
+    .header {
+        text-align: center;
+        padding: 60px 20px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--gradient-1);
+        opacity: 0.1;
+        z-index: -1;
+    }
+
+    .logo {
+        font-size: 48px;
+        font-weight: 800;
+        background: var(--gradient-1);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 20px;
+        display: inline-block;
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
+
+    .header h1 {
+        font-size: 42px;
+        font-weight: 700;
+        margin-bottom: 15px;
+        background: var(--gradient-1);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .header p {
+        font-size: 18px;
+        color: var(--text-secondary);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    /* Main Content */
+    .main-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-bottom: 60px;
+    }
+
+    @media (max-width: 968px) {
+        .main-content {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* Card Styles */
+    .card {
+        background: var(--bg-card);
+        border-radius: var(--border-radius);
+        padding: 30px;
+        box-shadow: var(--shadow-2);
+        transition: all 0.4s ease;
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: var(--gradient-1);
+    }
+
+    .card:hover {
+        transform: translateY(-10px);
+        box-shadow: var(--shadow-3), var(--shadow-glow);
+    }
+
+    .welcome-card {
+        grid-column: 1 / -1;
+        background: var(--gradient-1);
+        color: white;
+        text-align: center;
+        padding: 40px;
+    }
+
+    .welcome-card h2 {
+        font-size: 32px;
+        margin-bottom: 15px;
+    }
+
+    .welcome-card p {
+        font-size: 18px;
+        opacity: 0.9;
+    }
+
+    /* Terms List */
+    .terms-list {
+        list-style: none;
+    }
+
+    .term-item {
+        background: var(--bg-surface);
+        border-radius: var(--border-radius);
+        padding: 25px;
+        margin-bottom: 20px;
+        border-left: 5px solid var(--primary);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .term-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(108, 99, 255, 0.1), transparent);
+        transition: left 0.5s;
+    }
+
+    .term-item:hover::before {
+        left: 100%;
+    }
+
+    .term-item:hover {
+        transform: translateX(10px);
+        border-left-color: var(--secondary);
+    }
+
+    .term-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .term-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        font-size: 20px;
+        background: var(--gradient-1);
+        flex-shrink: 0;
+    }
+
+    .term-title {
+        font-size: 20px;
+        font-weight: 600;
+        color: var(--text-primary);
+    }
+
+    .term-content {
+        color: var(--text-secondary);
+        padding-left: 65px;
+    }
+
+    .term-content strong {
+        color: var(--primary-light);
+    }
+
+    /* Payment Highlight */
+    .payment-highlight {
+        background: var(--gradient-2);
+        color: white;
+        padding: 20px;
+        border-radius: var(--border-radius);
+        margin: 15px 0;
+        text-align: center;
+        box-shadow: var(--shadow-2);
+    }
+
+    .payment-highlight .amount {
+        font-size: 28px;
+        font-weight: 700;
+        margin: 10px 0;
+    }
+
+    /* Action Section */
+    .action-section {
+        text-align: center;
+        padding: 40px 20px;
+        background: var(--bg-card);
+        border-radius: var(--border-radius-lg);
+        margin: 40px 0;
+        box-shadow: var(--shadow-2);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .action-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--gradient-1);
+        opacity: 0.05;
+        z-index: -1;
+    }
+
+    .agree-btn {
+        background: var(--gradient-1);
+        color: white;
+        border: none;
+        padding: 20px 40px;
+        font-size: 20px;
+        font-weight: 600;
+        border-radius: var(--border-radius-xl);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: var(--shadow-2);
+        display: inline-flex;
+        align-items: center;
+        gap: 15px;
+        margin-top: 20px;
+        animation: pulse 2s infinite;
+    }
+
+    .agree-btn:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-3), var(--shadow-glow);
+    }
+
+    .agree-btn:active {
+        transform: translateY(0);
+    }
+
+    /* Footer */
+    .footer {
+        text-align: center;
+        padding: 40px 20px;
+        color: var(--text-muted);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-links {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-top: 20px;
+        flex-wrap: wrap;
+    }
+
+    .footer-link {
+        color: var(--text-secondary);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: color 0.3s ease;
+    }
+
+    .footer-link:hover {
+        color: var(--primary-light);
+    }
+
+    /* Animations */
+    .animate-on-scroll {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.6s ease;
+    }
+
+    .animate-on-scroll.animated {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+        .header h1 {
+            font-size: 32px;
+        }
+        
+        .logo {
+            font-size: 36px;
+        }
+        
+        .card {
+            padding: 20px;
+        }
+        
+        .term-header {
+            flex-direction: column;
+            text-align: center;
+        }
+        
+        .term-icon {
+            margin-right: 0;
+            margin-bottom: 10px;
+        }
+        
+        .term-content {
+            padding-left: 0;
+            text-align: center;
+        }
+        
+        .footer-links {
+            flex-direction: column;
+            gap: 15px;
+        }
+    }
+</style>
+
+<script>
+// Animate elements on scroll
+function animateOnScroll() {
+    const elements = document.querySelectorAll('.animate-on-scroll');
+    
+    elements.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        const elementVisible = 150;
+        
+        if (elementTop < window.innerHeight - elementVisible) {
+            element.classList.add('animated');
+        }
+    });
+}
+
+// Initialize animations when page loads
+window.addEventListener('load', function() {
+    // Add animation class to all cards and terms
+    const cards = document.querySelectorAll('.card, .term-item');
+    cards.forEach((card, index) => {
+        card.classList.add('animate-on-scroll');
+        card.style.transitionDelay = `${index * 0.1}s`;
+    });
+    
+    // Trigger initial animation check
+    animateOnScroll();
+});
+
+// Check animation on scroll
+window.addEventListener('scroll', animateOnScroll);
+
+function sendToWhatsApp() {
+    let phone = "+9779861513184";
+    let message = "म Jodinepal का सम्पूर्ण सेवा सर्त तथा नियमहरूमा सहमत छु। कृपया मेरो प्रोफाइल दर्ता प्रक्रिया अगाडि बढाइदिनुहोस्।";
+    
+    let url = "https://wa.me/" + phone.replace("+","") + "?text=" + encodeURIComponent(message) + "&cache_killer=" + Date.now();
+    window.location.href = url;
+}
+</script>
+
+</head>
+<body>
+    <!-- Floating Background Elements -->
+    <div class="floating-elements">
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">Jodinepal</div>
+            <h1>सेवा सर्त तथा नियमहरू</h1>
+            <p>तपाईंको प्रोफाइल दर्ता गर्नु अघि, कृपया यी नियमहरू ध्यानपूर्वक पढ्नुहोस्</p>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Welcome Card -->
+            <div class="card welcome-card">
+                <h2>👋 Jodinepal परिवारमा स्वागत छ!</h2>
+                <p>तपाईंको प्रोफाइल दर्ता गर्नु अघि, कृपया यी नियमहरू ध्यानपूर्वक पढ्नुहोस्।</p>
+            </div>
+
+            <!-- Left Column -->
+            <div class="card">
+                <h3 style="margin-bottom: 20px; color: var(--primary-light);">मुख्य नियमहरू</h3>
+                <ul class="terms-list">
+                    <li class="term-item">
+                        <div class="term-header">
+                            <div class="term-icon"><i class="fas fa-shield-alt"></i></div>
+                            <div class="term-title">सत्यताको शपथ!</div>
+                        </div>
+                        <div class="term-content">
+                            तपाईंले दिनुभएको सम्पूर्ण विवरण <strong>सत्य, प्रमाणित तथा विश्वसनीय</strong> हुनुपर्छ। गलत जानकारी भएमा प्रोफाइल <strong>तत्काल खारेज</strong> गरिनेछ।
+                        </div>
+                    </li>
+
+                    <li class="term-item">
+                        <div class="term-header">
+                            <div class="term-icon"><i class="fas fa-lock"></i></div>
+                            <div class="term-title">गोपनीयता हाम्रो प्राथमिकता</div>
+                        </div>
+                        <div class="term-content">
+                            तपाईंको जानकारी <strong>जीवनसाथी खोज्न मात्र</strong> प्रयोग गरिनेछ। तपाईंको अनुमति बिना कसैलाई पनि <strong>साझेदारी गरिँदैन</strong>।
+                        </div>
+                    </li>
+
+                    <li class="term-item">
+                        <div class="term-header">
+                            <div class="term-icon"><i class="fas fa-money-bill-wave"></i></div>
+                            <div class="term-title">प्रारम्भिक शुल्क</div>
+                        </div>
+                        <div class="term-content">
+                            प्रोफाइल दर्ता गर्न <strong>रु. 2000</strong> लाग्नेछ।
+                            <div class="payment-highlight">
+                                <div class="amount">रु. 2,000</div>
+                                <div>यो शुल्क फिर्ता हुँदैन (Non-refundable)</div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="term-item">
+                        <div class="term-header">
+                            <div class="term-icon"><i class="fas fa-badge-check"></i></div>
+                            <div class="term-title">Verify भएपछि मात्र पहुँच</div>
+                        </div>
+                        <div class="term-content">
+                            Jodinepal टिमले प्रोफाइल प्रमाणित गरेपछि मात्र तपाईं म्याचहरू हेर्न योग्य हुनुहुन्छ।
+                        </div>
+                    </li>
+
+                    <li class="term-item">
+                        <div class="term-header">
+                            <div class="term-icon"><i class="fas fa-comments"></i></div>
+                            <div class="term-title">५–६ म्याचको सेवा</div>
+                        </div>
+                        <div class="term-content">
+                            रु. 2000 शुल्कमा तपाईं <strong>५–६ सम्भावित म्याच</strong> सँग कुराकानी गर्न पाउनुहुन्छ।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Right Column -->
+            <div class="card">
+                <h3 style="margin-bottom: 20px; color: var(--primary-light);">अनिवार्य शर्तहरू</h3>
+                <ul class="terms-list">
+                    <li class="term-item">
+                        <div class="term-header">
+                            <div class="term-icon"><i class="fas fa-heart"></i></div>
+                            <div class="term-title">विवाह सफल भएपछि शुल्क</div>
+                        </div>
+                        <div class="term-content">
+                            यदि Jodinepal मार्फत <strong>विवाह भयो भने</strong>,
+                            <div class="payment-highlight">
+                                <div class="amount">रु. 15,000 × २ = रु. 30,000</div>
+                                <div>दुवै पक्षले रु. 15,000-15,000 अनिवार्य रूपमा तिर्नुपर्नेछ</div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="term-item">
+                        <div class="term-header">
+                            <div class="term-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                            <div class="term-title">शुल्क नतिरेमा</div>
+                        </div>
+                        <div class="term-content">
+                            विवाहपछिको शुल्क नतिरेमा, Jodinepal ले तपाईंको तस्वीर र विवरण <strong>सार्वजनिक रूपमा प्रयोग गर्न सक्छ</strong>, र तपाईंले <strong>कानूनी दाबी गर्न पाउनुहुन्न।</strong>
+                        </div>
+                    </li>
+
+                    <li class="term-item">
+                        <div class="term-header">
+                            <div class="term-icon"><i class="fas fa-user-check"></i></div>
+                            <div class="term-title">सभ्य र मर्यादित व्यवहार</div>
+                        </div>
+                        <div class="term-content">
+                            कुनै पनि प्रकारको दुर्व्यवहार, धम्की, वा ठगी कडा रूपमा निषेध छ।
+                        </div>
+                    </li>
+
+                    <li class="term-item">
+                        <div class="term-header">
+                            <div class="term-icon"><i class="fas fa-phone-alt"></i></div>
+                            <div class="term-title">सम्पर्क र विवरण अद्यावधिक</div>
+                        </div>
+                        <div class="term-content">
+                            Jodinepal ले आवश्यक परेमा तपाईंलाई सम्पर्क गर्न वा प्रोफाइल विवरण समायोजन गर्न सक्छ।
+                        </div>
+                    </li>
+
+                    <li class="term-item">
+                        <div class="term-header">
+                            <div class="term-icon"><i class="fas fa-ban"></i></div>
+                            <div class="term-title">अशिष्टतामाथि कडा कारबाही</div>
+                        </div>
+                        <div class="term-content">
+                            दुर्व्यवहार वा अशिष्टता देखिएमा तपाईंको पहुँच तुरुन्तै बन्द गरिनेछ।
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Action Section -->
+        <div class="action-section">
+            <h2 style="margin-bottom: 20px; color: var(--primary-light);">सबै नियमहरू पढिसक्नुभयो?</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 20px;">तलको बटन थिचेर तपाईं यी सबै नियमहरूमा सहमत हुनुहुन्छ</p>
+            <button class="agree-btn" onclick="sendToWhatsApp()">
+                <i class="fas fa-check-circle"></i>
+                म सेवा सर्तहरूमा सहमत छु
+            </button>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2023 Jodinepal. सर्वाधिकार सुरक्षित।</p>
+            <div class="footer-links">
+                <a href="privacy.html" class="footer-link">
+                    <i class="fas fa-shield-alt"></i>
+                    गोपनीयता नीति
+                </a>
+                <a href="contact.html" class="footer-link">
+                    <i class="fas fa-headset"></i>
+                    सम्पर्क गर्नुहोस्
+                </a>
+                <a href="about.html" class="footer-link">
+                    <i class="fas fa-info-circle"></i>
+                    हाम्रो बारेमा
+                </a>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jodinepal | सम्पर्क गर्नुहोस्</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+    :root {
+        --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        --gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        --gradient-5: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        
+        --primary: #6C63FF;
+        --primary-dark: #564FD8;
+        --primary-light: #8B85FF;
+        --secondary: #FF6584;
+        --accent: #36D1DC;
+        --success: #4CAF50;
+        --warning: #FF9800;
+        --error: #F44336;
+        
+        --bg-dark: #0F0F1B;
+        --bg-card: #1A1A2E;
+        --bg-surface: #242442;
+        --text-primary: #FFFFFF;
+        --text-secondary: #B8B8D0;
+        --text-muted: #8A8AA8;
+        
+        --shadow-1: 0 4px 6px rgba(0, 0, 0, 0.1);
+        --shadow-2: 0 10px 20px rgba(0, 0, 0, 0.2);
+        --shadow-3: 0 20px 40px rgba(0, 0, 0, 0.3);
+        --shadow-glow: 0 0 20px rgba(108, 99, 255, 0.3);
+        
+        --border-radius: 20px;
+        --border-radius-lg: 30px;
+        --border-radius-xl: 40px;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: var(--bg-dark);
+        color: var(--text-primary);
+        line-height: 1.7;
+        overflow-x: hidden;
+        background-image: 
+            radial-gradient(circle at 10% 20%, rgba(108, 99, 255, 0.1) 0%, transparent 20%),
+            radial-gradient(circle at 90% 80%, rgba(255, 101, 132, 0.1) 0%, transparent 20%);
+    }
+
+    .floating-elements {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+    }
+
+    .floating-element {
+        position: absolute;
+        border-radius: 50%;
+        background: var(--gradient-1);
+        opacity: 0.1;
+        animation: float 20s infinite linear;
+    }
+
+    .floating-element:nth-child(1) {
+        width: 300px;
+        height: 300px;
+        top: 10%;
+        left: 5%;
+        animation-delay: 0s;
+        background: var(--gradient-1);
+    }
+
+    .floating-element:nth-child(2) {
+        width: 200px;
+        height: 200px;
+        top: 60%;
+        right: 10%;
+        animation-delay: -5s;
+        background: var(--gradient-2);
+    }
+
+    .floating-element:nth-child(3) {
+        width: 150px;
+        height: 150px;
+        bottom: 20%;
+        left: 20%;
+        animation-delay: -10s;
+        background: var(--gradient-3);
+    }
+
+    @keyframes float {
+        0%, 100% {
+            transform: translateY(0) rotate(0deg);
+        }
+        25% {
+            transform: translateY(-20px) rotate(90deg);
+        }
+        50% {
+            transform: translateY(0) rotate(180deg);
+        }
+        75% {
+            transform: translateY(20px) rotate(270deg);
+        }
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .header {
+        text-align: center;
+        padding: 60px 20px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--gradient-1);
+        opacity: 0.1;
+        z-index: -1;
+    }
+
+    .logo {
+        font-size: 48px;
+        font-weight: 800;
+        background: var(--gradient-1);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 20px;
+        display: inline-block;
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
+
+    .header h1 {
+        font-size: 42px;
+        font-weight: 700;
+        margin-bottom: 15px;
+        background: var(--gradient-1);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .header p {
+        font-size: 18px;
+        color: var(--text-secondary);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .main-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        margin-bottom: 60px;
+    }
+
+    @media (max-width: 968px) {
+        .main-content {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .card {
+        background: var(--bg-card);
+        border-radius: var(--border-radius);
+        padding: 30px;
+        box-shadow: var(--shadow-2);
+        transition: all 0.4s ease;
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: var(--gradient-1);
+    }
+
+    .card:hover {
+        transform: translateY(-10px);
+        box-shadow: var(--shadow-3), var(--shadow-glow);
+    }
+
+    .welcome-card {
+        grid-column: 1 / -1;
+        background: var(--gradient-1);
+        color: white;
+        text-align: center;
+        padding: 40px;
+    }
+
+    .welcome-card h2 {
+        font-size: 32px;
+        margin-bottom: 15px;
+    }
+
+    .welcome-card p {
+        font-size: 18px;
+        opacity: 0.9;
+    }
+
+    .contact-methods {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+        margin-top: 30px;
+    }
+
+    .contact-method {
+        display: flex;
+        align-items: center;
+        padding: 25px;
+        background: var(--bg-surface);
+        border-radius: var(--border-radius);
+        transition: all 0.3s ease;
+        border-left: 4px solid var(--primary);
+    }
+
+    .contact-method:hover {
+        transform: translateX(10px);
+        border-left-color: var(--secondary);
+    }
+
+    .contact-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: var(--gradient-1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 20px;
+        font-size: 24px;
+        flex-shrink: 0;
+    }
+
+    .contact-details h4 {
+        font-size: 18px;
+        margin-bottom: 5px;
+        color: var(--text-primary);
+    }
+
+    .contact-details p {
+        color: var(--text-secondary);
+        margin-bottom: 8px;
+    }
+
+    .contact-link {
+        color: var(--primary-light);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+    }
+
+    .contact-link:hover {
+        color: var(--secondary);
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--text-primary);
+        font-weight: 500;
+    }
+
+    .form-input, .form-textarea {
+        width: 100%;
+        padding: 15px 20px;
+        background: var(--bg-surface);
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        border-radius: var(--border-radius);
+        color: var(--text-primary);
+        font-size: 16px;
+        transition: all 0.3s ease;
+    }
+
+    .form-input:focus, .form-textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1);
+    }
+
+    .form-textarea {
+        resize: vertical;
+        min-height: 120px;
+    }
+
+    .submit-btn {
+        width: 100%;
+        background: var(--gradient-1);
+        color: white;
+        border: none;
+        padding: 18px;
+        font-size: 18px;
+        font-weight: 600;
+        border-radius: var(--border-radius-xl);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: var(--shadow-2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+    }
+
+    .submit-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-3);
+    }
+
+    .office-hours {
+        margin-top: 30px;
+        padding: 25px;
+        background: var(--gradient-3);
+        border-radius: var(--border-radius);
+        color: white;
+    }
+
+    .office-hours h3 {
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .hours-list {
+        list-style: none;
+    }
+
+    .hours-list li {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .hours-list li:last-child {
+        border-bottom: none;
+    }
+
+    .faq-section {
+        margin-top: 40px;
+    }
+
+    .faq-item {
+        background: var(--bg-surface);
+        border-radius: var(--border-radius);
+        padding: 20px;
+        margin-bottom: 15px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .faq-item:hover {
+        background: var(--bg-card);
+        transform: translateX(5px);
+    }
+
+    .faq-question {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 500;
+        color: var(--text-primary);
+    }
+
+    .faq-answer {
+        margin-top: 10px;
+        color: var(--text-secondary);
+        display: none;
+    }
+
+    .faq-item.active .faq-answer {
+        display: block;
+    }
+
+    .footer {
+        text-align: center;
+        padding: 60px 20px;
+        color: var(--text-muted);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-links {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-top: 30px;
+        flex-wrap: wrap;
+    }
+
+    .footer-link {
+        color: var(--text-secondary);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: color 0.3s ease;
+        padding: 12px 24px;
+        border-radius: var(--border-radius);
+        background: var(--bg-surface);
+    }
+
+    .footer-link:hover {
+        color: var(--primary-light);
+        background: var(--bg-card);
+    }
+
+    .copyright {
+        margin-top: 30px;
+        font-size: 14px;
+        opacity: 0.7;
+    }
+
+    .animate-on-scroll {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.6s ease;
+    }
+
+    .animate-on-scroll.animated {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Dialog Box Styles */
+    .dialog-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        backdrop-filter: blur(5px);
+    }
+
+    .dialog-overlay.active {
+        display: flex;
+    }
+
+    .dialog-box {
+        background: var(--bg-card);
+        border-radius: var(--border-radius-lg);
+        padding: 40px;
+        max-width: 500px;
+        width: 90%;
+        box-shadow: var(--shadow-5);
+        border: 2px solid var(--primary);
+        position: relative;
+        animation: dialogSlideIn 0.3s ease-out;
+    }
+
+    @keyframes dialogSlideIn {
+        from {
+            opacity: 0;
+            transform: scale(0.8) translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+    }
+
+    .dialog-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+
+    .dialog-title {
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--primary-light);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .close-dialog {
+        background: none;
+        border: none;
+        color: var(--text-secondary);
+        font-size: 24px;
+        cursor: pointer;
+        transition: color 0.3s ease;
+        padding: 5px;
+    }
+
+    .close-dialog:hover {
+        color: var(--secondary);
+    }
+
+    .payment-methods, .documents-list, .verification-steps, .match-process, .account-delete {
+        display: grid;
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+
+    .payment-method, .document-item, .verification-step, .match-step, .delete-step {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        background: var(--bg-surface);
+        border-radius: var(--border-radius);
+        transition: all 0.3s ease;
+        border-left: 4px solid var(--primary);
+    }
+
+    .payment-method:hover, .document-item:hover, .verification-step:hover, .match-step:hover, .delete-step:hover {
+        transform: translateX(5px);
+        border-left-color: var(--secondary);
+    }
+
+    .payment-icon, .document-icon, .verification-icon, .match-icon, .delete-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--gradient-1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        font-size: 18px;
+        flex-shrink: 0;
+    }
+
+    .payment-details h4, .document-details h4, .verification-details h4, .match-details h4, .delete-details h4 {
+        font-size: 16px;
+        margin-bottom: 5px;
+        color: var(--text-primary);
+    }
+
+    .payment-details p, .document-details p, .verification-details p, .match-details p, .delete-details p {
+        font-size: 14px;
+        color: var(--text-secondary);
+    }
+
+    .dialog-note {
+        background: var(--gradient-2);
+        padding: 15px;
+        border-radius: var(--border-radius);
+        color: white;
+        text-align: center;
+        font-size: 14px;
+        margin-top: 20px;
+    }
+
+    .dialog-actions {
+        display: flex;
+        gap: 15px;
+        margin-top: 25px;
+    }
+
+    .dialog-btn {
+        flex: 1;
+        padding: 12px;
+        border: none;
+        border-radius: var(--border-radius);
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .dialog-btn.primary {
+        background: var(--gradient-1);
+        color: white;
+    }
+
+    .dialog-btn.secondary {
+        background: var(--bg-surface);
+        color: var(--text-primary);
+        border: 2px solid var(--primary);
+    }
+
+    .dialog-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-2);
+    }
+
+    @media (max-width: 768px) {
+        .header h1 {
+            font-size: 32px;
+        }
+        
+        .logo {
+            font-size: 36px;
+        }
+        
+        .card {
+            padding: 20px;
+        }
+        
+        .contact-method {
+            flex-direction: column;
+            text-align: center;
+        }
+        
+        .contact-icon {
+            margin-right: 0;
+            margin-bottom: 15px;
+        }
+        
+        .footer-links {
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .dialog-box {
+            padding: 25px;
+            margin: 20px;
+        }
+        
+        .dialog-actions {
+            flex-direction: column;
+        }
+    }
+</style>
+
+<script>
+function animateOnScroll() {
+    const elements = document.querySelectorAll('.animate-on-scroll');
+    
+    elements.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        const elementVisible = 150;
+        
+        if (elementTop < window.innerHeight - elementVisible) {
+            element.classList.add('animated');
+        }
+    });
+}
+
+window.addEventListener('load', function() {
+    const elements = document.querySelectorAll('.card, .contact-method, .faq-item');
+    elements.forEach((element, index) => {
+        element.classList.add('animate-on-scroll');
+        element.style.transitionDelay = `${index * 0.1}s`;
+    });
+    
+    animateOnScroll();
+});
+
+window.addEventListener('scroll', animateOnScroll);
+
+// Dialog Functions
+function showDialog(dialogId) {
+    const dialog = document.getElementById(dialogId);
+    dialog.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeDialog(dialogId) {
+    const dialog = document.getElementById(dialogId);
+    dialog.classList.remove('active');
+    document.body.style.overflow = 'auto';
+}
+
+function copyAccountNumber() {
+    const accountNumber = "1234567890123456";
+    navigator.clipboard.writeText(accountNumber).then(() => {
+        alert('बैंक खाता नम्बर कपी भयो: ' + accountNumber);
+    });
+}
+
+function sendToWhatsApp(event) {
+    event.preventDefault();
+    
+    // Get form data
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const subject = document.getElementById('subject').value;
+    const message = document.getElementById('message').value;
+    
+    // Validation
+    if (!name || !email || !message) {
+        alert('कृपया आवश्यक क्षेत्रहरू भर्नुहोस् (नाम, इमेल, सन्देश)');
+        return;
+    }
+    
+    // Create WhatsApp message
+    const whatsappMessage = `
+नमस्ते! म Jodinepal बाट सम्पर्क गर्दैछु:
+
+👤 *नाम:* ${name}
+📧 *इमेल:* ${email}
+📞 *फोन:* ${phone || 'नभएको'}
+📋 *विषय:* ${subject || 'नभएको'}
+💬 *सन्देश:* ${message}
+
+कृपया मलाई सम्पर्क गर्नुहोस्। धन्यवाद!`;
+    
+    // Encode message for URL
+    const encodedMessage = encodeURIComponent(whatsappMessage);
+    const phoneNumber = "9861513184";
+    
+    // Create WhatsApp URL
+    const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+    
+    // Open WhatsApp
+    window.open(whatsappURL, '_blank');
+    
+    // Optional: Reset form
+    document.getElementById('contactForm').reset();
+}
+
+function openWhatsApp() {
+    const phone = "9861513184";
+    const message = "नमस्ते, म Jodinepal बाट सम्पर्क गर्दैछु। कृपया मलाई सम्पर्क गर्नुहोस्।";
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank');
+}
+
+function makeCall() {
+    window.location.href = 'tel:+9779861513184';
+}
+
+function sendEmail() {
+    window.location.href = 'mailto:info@jodinepal.com?subject=Jodinepal सम्पर्क&body=नमस्ते, म Jodinepal बाट सम्पर्क गर्दैछु।';
+}
+
+// Close all dialogs when clicking outside
+document.querySelectorAll('.dialog-overlay').forEach(dialog => {
+    dialog.addEventListener('click', function(e) {
+        if (e.target === this) {
+            const dialogId = this.id;
+            closeDialog(dialogId);
+        }
+    });
+});
+
+// Close all dialogs with Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        document.querySelectorAll('.dialog-overlay').forEach(dialog => {
+            dialog.classList.remove('active');
+        });
+        document.body.style.overflow = 'auto';
+    }
+});
+
+// FAQ click handlers
+document.getElementById('faqPayment').addEventListener('click', function() {
+    showDialog('paymentDialog');
+});
+
+document.getElementById('faqDocuments').addEventListener('click', function() {
+    showDialog('documentsDialog');
+});
+
+document.getElementById('faqVerification').addEventListener('click', function() {
+    showDialog('verificationDialog');
+});
+
+document.getElementById('faqMatch').addEventListener('click', function() {
+    showDialog('matchDialog');
+});
+
+document.getElementById('faqDelete').addEventListener('click', function() {
+    showDialog('deleteDialog');
+});
+</script>
+
+</head>
+<body>
+    <!-- Payment Methods Dialog -->
+    <div class="dialog-overlay" id="paymentDialog">
+        <div class="dialog-box">
+            <div class="dialog-header">
+                <h3 class="dialog-title">
+                    <i class="fas fa-credit-card"></i>
+                    शुल्क तिर्ने विधिहरू
+                </h3>
+                <button class="close-dialog" onclick="closeDialog('paymentDialog')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="payment-methods">
+                <div class="payment-method">
+                    <div class="payment-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="payment-details">
+                        <h4>eSewa</h4>
+                        <p>eSewa ID: 9861513184</p>
+                    </div>
+                </div>
+                
+                <div class="payment-method">
+                    <div class="payment-icon">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <div class="payment-details">
+                        <h4>Khalti</h4>
+                        <p>Khalti ID: 9861513184</p>
+                    </div>
+                </div>
+                
+                <div class="payment-method">
+                    <div class="payment-icon">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <div class="payment-details">
+                        <h4>बैंक जम्मा</h4>
+                        <p>खाता नम्बर: 1234567890123456</p>
+                    </div>
+                </div>
+                
+                <div class="payment-method">
+                    <div class="payment-icon">
+                        <i class="fas fa-mobile"></i>
+                    </div>
+                    <div class="payment-details">
+                        <h4>मोबाइल बैंकिङ</h4>
+                        <p>IME Pay, ConnectIPS र अन्य</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dialog-note">
+                <strong>नोट:</strong> भुक्तानी गरेपछि रसिदको फोटो हाम्रो WhatsApp मा पठाउनुहोस्।
+            </div>
+            
+            <div class="dialog-actions">
+                <button class="dialog-btn secondary" onclick="copyAccountNumber()">
+                    <i class="fas fa-copy"></i>
+                    खाता नम्बर कपी गर्नुहोस्
+                </button>
+                <button class="dialog-btn primary" onclick="openWhatsApp()">
+                    <i class="fab fa-whatsapp"></i>
+                    WhatsApp मा रसिद पठाउनुहोस्
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Documents Dialog -->
+    <div class="dialog-overlay" id="documentsDialog">
+        <div class="dialog-box">
+            <div class="dialog-header">
+                <h3 class="dialog-title">
+                    <i class="fas fa-file-alt"></i>
+                    आवश्यक कागजातहरू
+                </h3>
+                <button class="close-dialog" onclick="closeDialog('documentsDialog')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="documents-list">
+                <div class="document-item">
+                    <div class="document-icon">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                    <div class="document-details">
+                        <h4>नागरिकता</h4>
+                        <p>मूल र फोटोकपी दुवै</p>
+                    </div>
+                </div>
+                
+                <div class="document-item">
+                    <div class="document-icon">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <div class="document-details">
+                        <h4>पासपोर्ट साइज फोटो</h4>
+                        <p>२ प्रति (ताजा फोटो)</p>
+                    </div>
+                </div>
+                
+                <div class="document-item">
+                    <div class="document-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="document-details">
+                        <h4>शैक्षिक प्रमाणपत्र</h4>
+                        <p>सबै शैक्षिक योग्यताको प्रमाणपत्र</p>
+                    </div>
+                </div>
+                
+                <div class="document-item">
+                    <div class="document-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <div class="document-details">
+                        <h4>पेशागत प्रमाणपत्र</h4>
+                        <p>यदि काम गर्नुहुन्छ भने</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dialog-note">
+                <strong>नोट:</strong> सबै कागजातहरू स्क्यान गरेर हामीलाई पठाउनुहोस्।
+            </div>
+            
+            <div class="dialog-actions">
+                <button class="dialog-btn primary" onclick="openWhatsApp()">
+                    <i class="fab fa-whatsapp"></i>
+                    कागजात पठाउनुहोस्
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Verification Dialog -->
+    <div class="dialog-overlay" id="verificationDialog">
+        <div class="dialog-box">
+            <div class="dialog-header">
+                <h3 class="dialog-title">
+                    <i class="fas fa-user-check"></i>
+                    भेरिफिकेशन प्रक्रिया
+                </h3>
+                <button class="close-dialog" onclick="closeDialog('verificationDialog')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="verification-steps">
+                <div class="verification-step">
+                    <div class="verification-icon">
+                        <i class="fas fa-upload"></i>
+                    </div>
+                    <div class="verification-details">
+                        <h4>कागजात अपलोड</h4>
+                        <p>सबै आवश्यक कागजात अपलोड गर्नुहोस्</p>
+                    </div>
+                </div>
+                
+                <div class="verification-step">
+                    <div class="verification-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="verification-details">
+                        <h4>जाँच प्रक्रिया</h4>
+                        <p>२४-४८ घण्टाभित्र कागजात जाँच</p>
+                    </div>
+                </div>
+                
+                <div class="verification-step">
+                    <div class="verification-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="verification-details">
+                        <h4>फोन पुष्टिकरण</h4>
+                        <p>आवश्यक परेमा फोन मार्फत पुष्टिकरण</p>
+                    </div>
+                </div>
+                
+                <div class="verification-step">
+                    <div class="verification-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="verification-details">
+                        <h4>भेरिफिकेशन सफल</h4>
+                        <p>भेरिफाई भएपछि म्याच हेर्न पाइन्छ</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dialog-note">
+                <strong>नोट:</strong> भेरिफिकेशन पूरा भएपछि मात्र म्याच हेर्न पाइन्छ।
+            </div>
+        </div>
+    </div>
+
+    <!-- Match Process Dialog -->
+    <div class="dialog-overlay" id="matchDialog">
+        <div class="dialog-box">
+            <div class="dialog-header">
+                <h3 class="dialog-title">
+                    <i class="fas fa-heart"></i>
+                    म्याच प्रक्रिया
+                </h3>
+                <button class="close-dialog" onclick="closeDialog('matchDialog')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="match-process">
+                <div class="match-step">
+                    <div class="match-icon">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <div class="match-details">
+                        <h4>प्रोफाइल विश्लेषण</h4>
+                        <p>तपाईंको प्रोफाइल अनुसार म्याच खोज्ने</p>
+                    </div>
+                </div>
+                
+                <div class="match-step">
+                    <div class="match-icon">
+                        <i class="fas fa-list"></i>
+                    </div>
+                    <div class="match-details">
+                        <h4>म्याच सुझाव</h4>
+                        <p>५-६ सम्भावित म्याचको सुझाव</p>
+                    </div>
+                </div>
+                
+                <div class="match-step">
+                    <div class="match-icon">
+                        <i class="fas fa-hand-pointer"></i>
+                    </div>
+                    <div class="match-details">
+                        <h4>म्याच स्वीकार</h4>
+                        <p>मनपरेको म्याचलाई स्वीकार गर्ने</p>
+                    </div>
+                </div>
+                
+                <div class="match-step">
+                    <div class="match-icon">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <div class="match-details">
+                        <h4>सम्पर्क जानकारी</h4>
+                        <p>दुवै पक्षले स्वीकार गरेपछि सम्पर्क जानकारी साझा</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dialog-note">
+                <strong>नोट:</strong> म्याच प्रक्रिया पूर्ण रूपमा सुरक्षित र गोप्य छ।
+            </div>
+        </div>
+    </div>
+
+    <!-- Account Delete Dialog -->
+    <div class="dialog-overlay" id="deleteDialog">
+        <div class="dialog-box">
+            <div class="dialog-header">
+                <h3 class="dialog-title">
+                    <i class="fas fa-user-times"></i>
+                    खाता डिलिट प्रक्रिया
+                </h3>
+                <button class="close-dialog" onclick="closeDialog('deleteDialog')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="account-delete">
+                <div class="delete-step">
+                    <div class="delete-icon">
+                        <i class="fas fa-comment"></i>
+                    </div>
+                    <div class="delete-details">
+                        <h4>सम्पर्क गर्नुहोस्</h4>
+                        <p>हामीलाई सीधै सम्पर्क गर्नुहोस्</p>
+                    </div>
+                </div>
+                
+                <div class="delete-step">
+                    <div class="delete-icon">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <div class="delete-details">
+                        <h4>अनुरोध दर्ता</h4>
+                        <p>खाता डिलिटको लागि अनुरोध गर्नुहोस्</p>
+                    </div>
+                </div>
+                
+                <div class="delete-step">
+                    <div class="delete-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <div class="delete-details">
+                        <h4>प्रोसेसिङ</h4>
+                        <p>२४ घण्टाभित्र खाता डिलिट प्रोसेस</p>
+                    </div>
+                </div>
+                
+                <div class="delete-step">
+                    <div class="delete-icon">
+                        <i class="fas fa-trash"></i>
+                    </div>
+                    <div class="delete-details">
+                        <h4>डाटा हटाउने</h4>
+                        <p>सबै डाटा स्थायी रूपमा हटाइने</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dialog-note">
+                <strong>नोट:</strong> खाता डिलिट गरेपछि सबै डाटा हराउँछ, फिर्ता गर्न सकिँदैन।
+            </div>
+            
+            <div class="dialog-actions">
+                <button class="dialog-btn primary" onclick="openWhatsApp()">
+                    <i class="fab fa-whatsapp"></i>
+                    खाता डिलिट गर्न अनुरोध गर्नुहोस्
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="floating-elements">
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <div class="logo">Jodinepal</div>
+            <h1>सम्पर्क गर्नुहोस्</h1>
+            <p>हामीसँग जडान गर्नुहोस्। तपाईंको विवाह यात्रामा हामी सहयोग गर्न तत्पर छौं।</p>
+        </header>
+
+        <div class="main-content">
+            <div class="card welcome-card">
+                <h2>👋 हामीसँग सम्पर्कमा रहनुहोस्</h2>
+                <p>तपाईंको विवाह सम्बन्धी कुनै पनि प्रश्न, सुझाव वा समस्याको लागि हामीलाई सम्पर्क गर्न सक्नुहुन्छ।</p>
+            </div>
+
+            <div class="card">
+                <h2 style="margin-bottom: 25px; color: var(--primary-light);">सम्पर्क जानकारी</h2>
+                <div class="contact-methods">
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>फोन नम्बर</h4>
+                            <p>हामीलाई सीधै फोन गर्नुहोस्</p>
+                            <a href="tel:+9779861513184" class="contact-link" onclick="makeCall()">
+                                <i class="fas fa-phone"></i> +९७७ ९८६१५१३१८४
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>WhatsApp</h4>
+                            <p>सीधै WhatsApp मा सन्देश पठाउनुहोस्</p>
+                            <a href="#" class="contact-link" onclick="openWhatsApp()">
+                                <i class="fab fa-whatsapp"></i> WhatsApp मा सम्पर्क गर्नुहोस्
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>इमेल</h4>
+                            <p>हामीलाई इमेल पठाउनुहोस्</p>
+                            <a href="mailto:info@jodinepal.com" class="contact-link" onclick="sendEmail()">
+                                <i class="fas fa-envelope"></i> info@jodinepal.com
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>कार्यालय</h4>
+                            <p>काठमाडौँ, नेपाल</p>
+                            <p class="contact-link">
+                                <i class="fas fa-location-dot"></i> काठमाडौँ महानगरपालिका
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="office-hours">
+                    <h3><i class="fas fa-clock"></i> कार्यालय समय</h3>
+                    <ul class="hours-list">
+                        <li>
+                            <span>सोमबार - शुक्रबार:</span>
+                            <span>सवारी ९:०० - बेलुका ६:००</span>
+                        </li>
+                        <li>
+                            <span>शनिबार:</span>
+                            <span>सवारी १०:०० - बेलुका ४:००</span>
+                        </li>
+                        <li>
+                            <span>आइतबार:</span>
+                            <span>बिदा</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 style="margin-bottom: 25px; color: var(--primary-light);">सन्देश पठाउनुहोस्</h2>
+                <form id="contactForm" onsubmit="sendToWhatsApp(event)">
+                    <div class="form-group">
+                        <label class="form-label" for="name">पूरा नाम <span style="color: var(--secondary);">*</span></label>
+                        <input type="text" id="name" class="form-input" placeholder="आफ्नो पूरा नाम लेख्नुहोस्" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="email">इमेल ठेगाना <span style="color: var(--secondary);">*</span></label>
+                        <input type="email" id="email" class="form-input" placeholder="example@email.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="phone">फोन नम्बर</label>
+                        <input type="tel" id="phone" class="form-input" placeholder="९८XXXXXXXX">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="subject">विषय</label>
+                        <select id="subject" class="form-input">
+                            <option value="">विषय छान्नुहोस्</option>
+                            <option value="प्रोफाइल दर्ता">प्रोफाइल दर्ता</option>
+                            <option value="भुक्तानी सम्बन्धी">भुक्तानी सम्बन्धी</option>
+                            <option value="म्याच सम्बन्धी">म्याच सम्बन्धी</option>
+                            <option value="टेक्निकल समस्या">टेक्निकल समस्या</option>
+                            <option value="अन्य">अन्य</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="message">सन्देश <span style="color: var(--secondary);">*</span></label>
+                        <textarea id="message" class="form-textarea" placeholder="आफ्नो सन्देश यहाँ लेख्नुहोस्..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        <i class="fab fa-whatsapp"></i>
+                        WhatsApp मा सन्देश पठाउनुहोस्
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 style="margin-bottom: 25px; color: var(--primary-light);">बारम्बार सोधिने प्रश्नहरू</h2>
+            <div class="faq-section">
+                <div class="faq-item" id="faqDocuments">
+                    <div class="faq-question">
+                        <span>प्रोफाइल दर्ता गर्न के के कागजात चाहिन्छ?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>प्रोफाइल दर्ता गर्न आवश्यक कागजातहरूको विस्तृत जानकारी। क्लिक गरेर हेर्नुहोस्...</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" id="faqVerification">
+                    <div class="faq-question">
+                        <span>प्रोफाइल भेरिफिकेशनमा कति समय लाग्छ?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>भेरिफिकेशन प्रक्रिया र समयको विस्तृत जानकारी। क्लिक गरेर हेर्नुहोस्...</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" id="faqPayment">
+                    <div class="faq-question">
+                        <span>शुल्क तिर्ने विधि के हो?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>शुल्क तिर्नका लागि उपलब्ध सबै विधिहरूको विस्तृत जानकारी। क्लिक गरेर हेर्नुहोस्...</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" id="faqDelete">
+                    <div class="faq-question">
+                        <span>खाता कसरी डिलिट गर्न सकिन्छ?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>खाता डिलिट गर्ने प्रक्रिया र आवश्यक कदमहरू। क्लिक गरेर हेर्नुहोस्...</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" id="faqMatch">
+                    <div class="faq-question">
+                        <span>म्याच कसरी काम गर्छ?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>म्याच प्रक्रिया र कसरी म्याच काम गर्छ भन्ने विस्तृत जानकारी। क्लिक गरेर हेर्नुहोस्...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="terms.html" class="footer-link">
+                    <i class="fas fa-file-contract"></i>
+                    सेवा सर्तहरू
+                </a>
+                <a href="privacy.html" class="footer-link">
+                    <i class="fas fa-shield-alt"></i>
+                    गोपनीयता नीति
+                </a>
+                <a href="about.html" class="footer-link">
+                    <i class="fas fa-info-circle"></i>
+                    हाम्रो बारेमा
+                </a>
+            </div>
+            <div class="copyright">
+                © २०२३ Jodinepal. सर्वाधिकार सुरक्षित। नेपालको विश्वसनीय विवाह साथी खोजी प्लेटफर्म
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
