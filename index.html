@@ -49,6 +49,182 @@
         justify-content: center;
         align-items: flex-start;
         min-height: 100vh;
+        overflow-x: hidden;
+    }
+
+    /* Welcome Dialog Styles */
+    .welcome-dialog-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        animation: fadeIn 0.5s ease;
+    }
+
+    .welcome-dialog {
+        background: var(--surface);
+        border-radius: var(--border-radius-lg);
+        width: 90%;
+        max-width: 500px;
+        overflow: hidden;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        animation: slideUp 0.7s ease;
+        transform-origin: center;
+    }
+
+    .welcome-header {
+        background: linear-gradient(135deg, var(--primary-dark), var(--secondary-dark));
+        padding: 25px 20px;
+        text-align: center;
+        color: var(--on-primary);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .welcome-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+        animation: shimmer 3s infinite linear;
+    }
+
+    .welcome-logo {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 15px;
+        font-weight: 700;
+        font-size: 24px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        animation: pulse 2s infinite ease-in-out;
+    }
+
+    .welcome-logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+    .welcome-title {
+        font-size: 24px;
+        margin-bottom: 8px;
+        font-weight: 600;
+    }
+
+    .welcome-subtitle {
+        font-size: 16px;
+        opacity: 0.9;
+    }
+
+    .welcome-content {
+        padding: 25px;
+        text-align: center;
+    }
+
+    .certificate-container {
+        margin: 20px auto;
+        width: 200px;
+        height: 150px;
+        border: 2px solid var(--primary);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #f5f7fa, #e4e8f4);
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        animation: float 3s ease-in-out infinite;
+    }
+
+    .certificate-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .welcome-message {
+        margin: 20px 0;
+        line-height: 1.6;
+        color: var(--on-surface);
+    }
+
+    .trust-points {
+        text-align: left;
+        margin: 20px 0;
+        background: var(--background);
+        padding: 15px;
+        border-radius: var(--border-radius);
+        border-left: 4px solid var(--primary);
+    }
+
+    .trust-points li {
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+    }
+
+    .trust-points .material-icons {
+        color: var(--success);
+        margin-right: 10px;
+        font-size: 18px;
+    }
+
+    .welcome-actions {
+        display: flex;
+        justify-content: center;
+        margin-top: 25px;
+    }
+
+    .btn-welcome {
+        background: linear-gradient(135deg, var(--secondary), var(--primary));
+        color: var(--on-primary);
+        border: none;
+        padding: 14px 30px;
+        border-radius: var(--border-radius);
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(126, 87, 194, 0.4);
+    }
+
+    .btn-welcome:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(126, 87, 194, 0.6);
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+
+    @keyframes slideUp {
+        from { transform: translateY(50px) scale(0.9); opacity: 0; }
+        to { transform: translateY(0) scale(1); opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
     }
 
     .container {
@@ -56,6 +232,10 @@
         max-width: 800px;
         background: var(--surface);
         overflow: hidden;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        border-radius: 20px;
+        margin: 20px;
+        display: none; /* Initially hidden until welcome dialog is closed */
     }
 
     .header {
@@ -102,6 +282,7 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
+        border-radius: 50%;
     }
 
     @keyframes pulse {
@@ -127,7 +308,7 @@
     }
 
     .progress-bar {
-        height: 6px;
+        height: 8px;
         background: var(--divider);
         border-radius: 10px;
         overflow: hidden;
@@ -140,6 +321,24 @@
         background: linear-gradient(90deg, var(--secondary), var(--primary));
         width: 33.33%;
         transition: width 0.5s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .progress-fill::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+        animation: shimmer-progress 2s infinite;
+    }
+
+    @keyframes shimmer-progress {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
     }
 
     .progress-steps {
@@ -167,12 +366,14 @@
         margin-bottom: 8px;
         color: var(--muted);
         transition: all 0.3s ease;
+        position: relative;
     }
 
     .step.active .step-icon {
         background: linear-gradient(135deg, var(--secondary), var(--primary));
         color: var(--on-primary);
         box-shadow: 0 4px 15px rgba(126, 87, 194, 0.4);
+        transform: scale(1.1);
     }
 
     .step-label {
@@ -276,7 +477,6 @@
         cursor: pointer;
         padding-right: 40px !important;
     }
-
 
     .form-group input:focus,
     .form-group select:focus,
@@ -792,6 +992,10 @@
             flex: 1;
             justify-content: center;
         }
+        
+        .welcome-dialog {
+            width: 95%;
+        }
     }
 
     /* --- Custom Dialog Styling (Improved Gender Selector) --- */
@@ -930,10 +1134,50 @@
 
 </head>
 <body>
-    <div class="container">
+    <!-- Welcome Dialog -->
+    <div class="welcome-dialog-overlay" id="welcomeDialog">
+        <div class="welcome-dialog">
+            <div class="welcome-header">
+                <div class="welcome-logo">
+                    <img src="app_icon.png" alt="जोडी नेपाल">
+                </div>
+                <h1 class="welcome-title">जोडी नेपालमा स्वागत छ!</h1>
+                <p class="welcome-subtitle">नेपालको विश्वसनीय जीवनसाथी खोजी सेवा</p>
+            </div>
+            <div class="welcome-content">
+                <p class="welcome-message">हाम्रो कम्पनी दर्ता प्रमाणपत्र र विश्वसनीयता प्रमाणित:</p>
+                
+                <div class="certificate-container">
+                    <img src="from.png" alt="कम्पनी दर्ता प्रमाणपत्र">
+                </div>
+                
+                <div class="trust-points">
+                    <ul>
+                        <li><span class="material-icons">verified</span> सरकारी दर्ता प्रमाणित कम्पनी</li>
+                        <li><span class="material-icons">security</span> गोपनीयता र सुरक्षा सुनिश्चित</li>
+                        <li><span class="material-icons">groups</span> सयौं सफल जोडीहरूको विश्वास</li>
+                        <li><span class="material-icons">support_agent</span> २४/७ ग्राहक सेवा</li>
+                    </ul>
+                </div>
+                
+                <p class="welcome-message">अब सजिलैसँग आफ्नो जीवनसाथी खोज्नको लागि दर्ता गर्नुहोस्!</p>
+                
+                <div class="welcome-actions">
+                    <button class="btn-welcome" id="startRegistration">
+                        <span class="material-icons">how_to_reg</span>
+                        दर्ता प्रक्रिया सुरु गर्नुहोस्
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Registration Form -->
+    <div class="container" id="mainForm">
         <div class="header">
-                <img class="logo" src="app_icon.png" alt="जोडी नेपाल">
-            
+            <div class="logo">
+                <img src="app_icon.png" alt="जोडी नेपाल">
+            </div>
             <h1>जोडी नेपाल रजिस्ट्रेशन फारम</h1>
             <p>Step-by-step • सुरक्षित र भरपर्दो</p>
         </div>
@@ -1290,6 +1534,20 @@
         const realtimeDB = firebase.database();
 
         document.addEventListener('DOMContentLoaded', function() {
+            // Welcome dialog elements
+            const welcomeDialog = document.getElementById('welcomeDialog');
+            const startRegistrationBtn = document.getElementById('startRegistration');
+            const mainForm = document.getElementById('mainForm');
+            
+            // Show welcome dialog on page load
+            welcomeDialog.style.display = 'flex';
+            
+            // Start registration button handler
+            startRegistrationBtn.addEventListener('click', function() {
+                welcomeDialog.style.display = 'none';
+                mainForm.style.display = 'block';
+            });
+            
             // Step management elements
             const steps = document.querySelectorAll('.step-panel');
             const stepIndicators = document.querySelectorAll('.step');
